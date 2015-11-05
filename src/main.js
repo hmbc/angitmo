@@ -1,8 +1,9 @@
 /* global angular */
 import {} from './genres/main';
 import {} from './albums/main';
-import {} from './app/main';
+import {} from './home/main';
+import {} from './config';
 
-import { default as appModuleName } from './app/module';
+import { default as homeModuleName } from './home/module';
 
-angular.bootstrap(document, [appModuleName]);
+angular.bootstrap(document, [homeModuleName]);

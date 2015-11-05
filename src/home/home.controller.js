@@ -1,5 +1,5 @@
 /* global angular */
-import { default as appModuleName } from './module';
+import { default as moduleName } from './module';
 import { default as albumsServiceName } from '../albums/albums.service';
 
 export const controllerName = "HomeController"
@@ -17,11 +17,13 @@ class HomeController {
 }
 HomeController.inject = [];
 
+const topAlbumsCount = 6;
+
 export let albumsResolver = (albumsService) => {
-	return albumsService.getTop(6);
+	return albumsService.getTop(topAlbumsCount);
 };
 albumsResolver.$inject = [albumsServiceName];
 
 angular
-	.module(appModuleName)
+	.module(moduleName)
 	.controller(controllerName, HomeController);

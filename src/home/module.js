@@ -2,7 +2,7 @@
 import { default as genresModuleName } from '../genres/module';
 import { default as albumsModuleName } from '../albums/module';
 
-const moduleName = 'app';
+const moduleName = 'home';
 
 angular.module(moduleName, ['ngRoute', genresModuleName, albumsModuleName]);
 

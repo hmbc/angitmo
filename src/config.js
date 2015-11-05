@@ -1,14 +1,14 @@
 /* global angular */
-import { default as appModuleName } from './module'
-import { controllerName as homeControllerName, albumsResolver as homeControllerAlbumsResolver } from './home.controller'
-import { controllerName as genresListConrollerName } from '../genres/genres-list.controller'
-import { controllerName as albumsListControllerName, albumsResolver as albumsListControllerResolver } from '../albums/albums-list.controller';
-import { controllerName as albumDetailsControllerName, albumsResolver as albumDetailsResolver } from '../albums/album-details.controller';
+import { default as homeModuleName } from './home/module'
+import { controllerName as homeControllerName, albumsResolver as homeControllerAlbumsResolver } from './home/home.controller'
+import { controllerName as genresListConrollerName } from './genres/genres-list.controller'
+import { controllerName as albumsListControllerName, albumsResolver as albumsListControllerResolver } from './albums/albums-list.controller';
+import { controllerName as albumDetailsControllerName, albumsResolver as albumDetailsResolver } from './albums/album-details.controller';
 
 function config($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: '/app/home.html',
+			templateUrl: '/home/home.html',
 			controller: homeControllerName,
 			controllerAs: 'ctrl',
 			resolve: {
@@ -48,5 +48,5 @@ function config($routeProvider, $locationProvider) {
 config.$inject = ['$routeProvider', '$locationProvider'];
 
 angular
-	.module(appModuleName)
+	.module(homeModuleName)
 	.config(config);
