@@ -2,5 +2,5 @@
 
 npm install
 bower install
-gulp build
-gulp server
+gulp rebuild
+gulp http
