@@ -1,7 +1,7 @@
 /* global $filter */
 /* global angular */
 import { default as albumsModuleName } from './module';
-import { default as Album } from './album';
+import { Album } from './album';
 
 const serviceName = "albumsService";
 

@@ -5,17 +5,20 @@ module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: 'build',
+    basePath: '.',
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: [
+      'requirejs',
+      'jasmine',
+    ],
 
 
     // list of files / patterns to load in the browser
     files: [
-      '**/*spec.js'
+      'build/build.spec.js'
     ],
 
 
@@ -29,11 +32,10 @@ module.exports = function (config) {
     preprocessors: {
     },
 
-
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['dots', 'progress'],
 
 
     // web server port
@@ -53,19 +55,9 @@ module.exports = function (config) {
     autoWatch: true,
 
 
-    customLaunchers: {
-      'Custom_Chrome': {
-        base: 'Chrome',
-        flags: ['--enable-javascript-harmony']
-      }
-    },
-
-    // use the custom launcher
-    browsers: ['Custom_Chrome'],
-
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    // browsers: ['Chrome'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode

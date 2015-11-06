@@ -1,16 +1,31 @@
+/* global Buffer */
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var clean = require('gulp-clean');
 var gutil = require('gulp-util');
 var requirejs = require('gulp-requirejs');
 var uglify = require('gulp-uglify');
+var karma = require('karma');
 var http = require('gulp-connect');
+var es = require('event-stream');
 
 var paths = {
 	src: 'src',
 	build: 'build',
 	bower: 'bower_components'
 };
+
+function appendLine(text) {
+	return es.through(function (file) {
+		if (file.isNull()) return this.emit('data', file);
+		if (file.isStream()) return this.emit('error', new Error("gulp-insert-lines: Streaming not supported"));
+
+		var str = file.contents.toString('utf8') + '\n' + text;
+
+		file.contents = new Buffer(str);
+		this.emit('data', file);
+	});
+}
 
 gulp.task('clean', function () {
 	return gulp.src(paths.build, { read: false })
@@ -56,16 +71,36 @@ gulp.task('build', ['transpile', 'assets', 'bower'], function (done) {
 		baseUrl: paths.build,
 		out: 'build.js'
 	})
+		.pipe(appendLine("$(function(){ require(['main']); });"))
 	//.pipe(uglify())
-        .pipe(gulp.dest(paths.build));
+		.pipe(gulp.dest(paths.build));
 });
 
-gulp.task('rebuild',['clean'], function(){
-	gulp.start('build');
+gulp.task('build-spec', ['transpile', 'assets', 'bower'], function (done) {
+    return requirejs({
+		name: "main.spec",
+		baseUrl: paths.build,
+		out: 'build.spec.js'
+	})
+		.pipe(appendLine("require(['main.spec']);"))	
+	//.pipe(uglify())
+		.pipe(gulp.dest(paths.build));
+});
+
+gulp.task('rebuild', ['clean'], function (done) {
+	gulp.start(['build', 'build-spec']);
+	done();
+});
+
+gulp.task('test', function (done) {
+	new karma.Server({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun: true
+	}, done).start();
 });
 
 gulp.task('watch', function () {
-    gulp.watch([paths.src + '/**/*'], ['build']);
+    return gulp.watch([paths.src + '/**/*'], ['rebuild']);
 });
 
 gulp.task('http', function () {
@@ -75,6 +110,6 @@ gulp.task('http', function () {
 	});
 });
 
-gulp.task('default', ['clean'], function () {
-	gulp.start(['build', 'assets', 'watch', 'http']);
+gulp.task('default', ['rebuild'], function () {
+	gulp.start(['watch', 'http']);
 });

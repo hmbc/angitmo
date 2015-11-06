@@ -1,4 +1,4 @@
-export default class Album {
+export class Album {
 	constructor(id, artist, name, genre, price) {
 		this.id = id;
 		this.artist = artist;
