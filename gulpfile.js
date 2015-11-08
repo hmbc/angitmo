@@ -1,3 +1,4 @@
+/* global __dirname */
 /* global Buffer */
 var gulp = require('gulp');
 var babel = require('gulp-babel');
@@ -76,7 +77,7 @@ gulp.task('build-src', function (done) {
 		.pipe(gulp.dest(paths.build));
 });
 
-gulp.task('build-test', function (done) {
+gulp.task('build-unit-test', function (done) {
     return requirejs({
 		name: "main.spec",
 		baseUrl: paths.build,
@@ -88,7 +89,7 @@ gulp.task('build-test', function (done) {
 });
 
 gulp.task('build', ['transpile', 'copy-assets', 'copy-libs'], function () {
-	gulp.start(['build-src', 'build-test']);
+	gulp.start(['build-src', 'build-unit-test']);
 });
 
 gulp.task('rebuild', ['clean'], function (done) {
@@ -96,7 +97,7 @@ gulp.task('rebuild', ['clean'], function (done) {
 	done();
 });
 
-gulp.task('test', function (done) {
+gulp.task('karma-test', function (done) {
 	new karma.Server({
 		configFile: __dirname + '/karma.conf.js',
 		singleRun: true
@@ -104,7 +105,7 @@ gulp.task('test', function (done) {
 });
 
 gulp.task('watch', function () {
-    return gulp.watch([paths.src + '/**/*'], ['rebuild']);
+    return gulp.watch([paths.src + '/**/*'], ['build']);
 });
 
 gulp.task('http', function () {

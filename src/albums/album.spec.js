@@ -4,7 +4,7 @@
 
 import { Album } from './album'
 
-describe("album", () => {
+describe("albums/album", () => {
 	const id = 1;
 	const artist = "artist name";
 	const name = "album name";
@@ -37,4 +37,4 @@ describe("album", () => {
 
 		assertAlbum(album);
 	});
-})
+});

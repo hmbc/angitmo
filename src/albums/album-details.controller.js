@@ -4,9 +4,14 @@ import { default as albumsServiceName } from './albums.service';
 
 export const controllerName = "AlbumDetailsController";
 
+let _album = Symbol();
 class AlbumDetailsController {
 	constructor(album) {
-		this.album = album;
+		this[_album] = album;
+	}
+
+	get album() {
+		return this[_album];
 	}
 }
 AlbumDetailsController.$inject = ['album'];
