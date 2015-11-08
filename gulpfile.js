@@ -42,7 +42,7 @@ gulp.task('transpile', function () {
 		.pipe(gulp.dest(paths.build));
 });
 
-gulp.task('assets', function () {
+gulp.task('copy-assets', function () {
 	return gulp.src([
 		paths.src + '/**/*.html',
 		paths.src + '/**/*.css',
@@ -51,7 +51,7 @@ gulp.task('assets', function () {
 		.pipe(gulp.dest(paths.build));
 })
 
-gulp.task('bower', function () {
+gulp.task('copy-libs', function () {
 	return gulp.src([
 		paths.bower + "/**/*.js",
 		paths.bower + '/**/*.css',
@@ -65,7 +65,7 @@ gulp.task('bower', function () {
 		.pipe(gulp.dest(paths.build + '/bower_components'));
 });
 
-gulp.task('build', ['transpile', 'assets', 'bower'], function (done) {
+gulp.task('build-src', function (done) {
     return requirejs({
 		name: "main",
 		baseUrl: paths.build,
@@ -76,7 +76,7 @@ gulp.task('build', ['transpile', 'assets', 'bower'], function (done) {
 		.pipe(gulp.dest(paths.build));
 });
 
-gulp.task('build-spec', ['transpile', 'assets', 'bower'], function (done) {
+gulp.task('build-test', function (done) {
     return requirejs({
 		name: "main.spec",
 		baseUrl: paths.build,
@@ -87,8 +87,12 @@ gulp.task('build-spec', ['transpile', 'assets', 'bower'], function (done) {
 		.pipe(gulp.dest(paths.build));
 });
 
+gulp.task('build', ['transpile', 'copy-assets', 'copy-libs'], function () {
+	gulp.start(['build-src', 'build-test']);
+});
+
 gulp.task('rebuild', ['clean'], function (done) {
-	gulp.start(['build', 'build-spec']);
+	gulp.start(['build']);
 	done();
 });
 
