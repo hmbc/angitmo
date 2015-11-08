@@ -12,7 +12,6 @@ class AlbumsListDirective {
 }
 
 let directiveFactory = () => new AlbumsListDirective();
-directiveFactory.$inject = [];
 
 angular
 	.module(albumsModuleName)

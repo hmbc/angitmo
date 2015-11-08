@@ -5,6 +5,7 @@ import { controllerName as genresListConrollerName } from './genres/genres-list.
 import { controllerName as albumsListControllerName, albumsResolver as albumsListControllerResolver } from './albums/albums-list.controller';
 import { controllerName as albumDetailsControllerName, albumsResolver as albumDetailsResolver } from './albums/album-details.controller';
 
+/*@ngInject*/
 function config($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
@@ -44,8 +45,6 @@ function config($routeProvider, $locationProvider) {
 		requireBase: false
 	});
 }
-
-config.$inject = ['$routeProvider', '$locationProvider'];
 
 angular
 	.module(homeModuleName)

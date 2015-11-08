@@ -9,6 +9,7 @@ var uglify = require('gulp-uglify');
 var karma = require('karma');
 var http = require('gulp-connect');
 var es = require('event-stream');
+var ngAnnotate = require('gulp-ng-annotate');
 
 var paths = {
 	src: 'src',
@@ -40,6 +41,7 @@ gulp.task('transpile', function () {
 		.pipe(babel({
 			modules: "amd"
 		}))
+		.pipe(ngAnnotate())
 		.pipe(gulp.dest(paths.build));
 });
 

@@ -14,7 +14,6 @@ class AlbumsByGenreLinkDirective {
 }
 
 let directiveFactory = () => new AlbumsByGenreLinkDirective();
-directiveFactory.$inject = [];
 
 angular
 	.module(genresModuleName)

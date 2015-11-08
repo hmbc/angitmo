@@ -5,17 +5,17 @@ import { default as albumsServiceName } from './albums.service';
 export const controllerName = "AlbumsListController";
 
 class AlbumsListController {
+	/*@ngInject*/
 	constructor(albums) {
 		this.albums = albums;
 	}
 }
-AlbumsListController.$inject = ['albums'];
 
+/*@ngInject*/
 export let albumsResolver = (albumsService, $route) => {
 	return albumsService.getByGenre($route.current.params.genre);
 
 };
-albumsResolver.$inject = [albumsServiceName, '$route'];
 
 angular
 	.module(albumsModuleName)

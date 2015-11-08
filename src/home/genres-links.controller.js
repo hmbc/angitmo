@@ -7,6 +7,7 @@ export const controllerName = "GenresLinksController";
 let _genres = Symbol();
 
 class GenresLinksController {
+  /*@ngInject*/
   constructor(genresService) {
     this[_genres] = genresService.getGenres();
   }
@@ -15,8 +16,6 @@ class GenresLinksController {
     return this[_genres];
   }
 }
-
-GenresLinksController.$inject = [genresServiceName];
 
 angular
   .module(moduleName)

@@ -6,6 +6,7 @@ export const controllerName = "AlbumDetailsController";
 
 let _album = Symbol();
 class AlbumDetailsController {
+	/*@ngInject*/
 	constructor(album) {
 		this[_album] = album;
 	}
@@ -14,12 +15,12 @@ class AlbumDetailsController {
 		return this[_album];
 	}
 }
-AlbumDetailsController.$inject = ['album'];
 
+/*@ngInject*/
 export let albumsResolver = (albumsService, $route) => {
 	return albumsService.getById($route.current.params.id);
 };
-albumsResolver.$inject = [albumsServiceName, '$route'];
+
 
 angular
 	.module(albumModuleName)

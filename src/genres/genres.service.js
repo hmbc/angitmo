@@ -1,7 +1,7 @@
 /* global angular */
 import { default as genresModuleName } from './module';
 
-export const serviceName = "GenresService";
+export const serviceName = "genresService";
 
 const genres = [
 	'Pop', 'Rock', 'Jazz', 'Metal', 'Electronic', 'Blues', 'Latin', 'Rap',
@@ -18,7 +18,6 @@ class GenresService {
 }
 
 let factory = () => new GenresService();
-factory.$inject = [];
 
 angular
 	.module(genresModuleName)

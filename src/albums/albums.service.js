@@ -25,6 +25,7 @@ const albums = [
 let _limitTo = Symbol();
 let _filter = Symbol();
 class AlbumsService {
+	/*@ngInject*/
 	constructor($filter) {
 		this[_limitTo] = $filter('limitTo');
 		this[_filter] = $filter('filter');
@@ -43,8 +44,7 @@ class AlbumsService {
 		return this[_filter](albums, { genre: genre }, true);
 	}
 }
-let serviceFactory = ($filter) => new AlbumsService($filter);
-serviceFactory.$inject = ['$filter'];
+let serviceFactory = /*@ngInject*/ ($filter) => new AlbumsService($filter);
 
 angular
 	.module(albumsModuleName)

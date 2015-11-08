@@ -24,15 +24,15 @@ describe('albums/album-details', () => {
 
 	it('albumsResolver returns album instance from albumsService by id from routing parameter', () => {
 		const expectedAlbum = { id: 10 };
-
-		let albumsService = jasmine.createSpyObj('albumsSpy', ['getById']);
-		albumsService.getById.and.returnValue(expectedAlbum);
-
+		const getById = 'getById';
+		let albumsService = jasmine.createSpyObj('albumsSpy', [getById]);
+		albumsService[getById].and.returnValue(expectedAlbum);
 		let route = { current: { params: { id: expectedAlbum.id } } };
+		let resolver = albumsResolver;
 
-		var album = albumsResolver(albumsService, route);
+		var album = resolver(albumsService, route);
 
-		expect(albumsService.getById).toHaveBeenCalledWith(expectedAlbum.id);
+		expect(albumsService[getById]).toHaveBeenCalledWith(expectedAlbum.id);
 		expect(album).toBe(expectedAlbum);
 	});
 });
