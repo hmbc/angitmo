@@ -9,15 +9,15 @@ import { default as serviceName } from './albums.service';
 describe(moduleName + '/' + serviceName, () => {
 	beforeEach(module(moduleName));
 
-	it('getById returns album by id from resource', () => {
+	xit('getById returns album by id from resource', () => {
 		fail('not implemented yet!');
 	});
 
-	it('getTop returns top x albums', () => {
+	xit('getTop returns top x albums', () => {
 		fail('not implemented yet!');
 	});
 
-	it('getByGenre returns albums with specyfied genre', () => {
+	xit('getByGenre returns albums with specyfied genre', () => {
 		fail('not implemented yet!');
 	});
 });
