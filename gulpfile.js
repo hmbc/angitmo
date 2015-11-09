@@ -6,16 +6,17 @@ var clean = require('gulp-clean');
 var gutil = require('gulp-util');
 var requirejs = require('gulp-requirejs');
 var uglify = require('gulp-uglify');
-var karma = require('karma');
 var http = require('gulp-connect');
 var es = require('event-stream');
 var ngAnnotate = require('gulp-ng-annotate');
 var jshint = require('gulp-jshint');
+var angularProtractor = require('gulp-angular-protractor');
 
 var paths = {
-	src: 'src',
+	bower: 'bower_components',
 	build: 'build',
-	bower: 'bower_components'
+	e2e: 'e2e',
+	src: 'src'
 };
 
 function appendLine(text) {
@@ -76,7 +77,7 @@ gulp.task('build-src', function (done) {
 		out: 'build.js'
 	})
 		.pipe(appendLine("$(function(){ require(['main']); });"))
-		.pipe(jshint())		
+		.pipe(jshint())
 		.pipe(jshint.reporter('default'))
 	//.pipe(uglify())
 		.pipe(gulp.dest(paths.build));
@@ -103,11 +104,16 @@ gulp.task('rebuild', ['clean'], function (done) {
 	done();
 });
 
-gulp.task('karma-test', function (done) {
-	new karma.Server({
-		configFile: __dirname + '/karma.conf.js',
-		singleRun: true
-	}, done).start();
+gulp.task('e2e', function () {
+	gulp
+		.src([paths.e2e + '/**/*.e2e.js'])
+		.pipe(angularProtractor({
+			'configFile': paths.e2e + '/protractor.config.js',
+			'args': ['--baseUrl', 'http://localhost:8080/'],
+			'autoStartStopServer': true,
+			'debug': true
+		}))
+		.on('error', gutil.log)
 });
 
 gulp.task('watch', function () {
