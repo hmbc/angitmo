@@ -24,7 +24,7 @@ describe('albums/albums-list', () => {
 		let albumsService = jasmine.createSpyObj('albumsService', ['getByGenre']);
 		albumsService.getByGenre.and.returnValue(expectedAlbums);
 
-		var albums = albumsResolver(albumsService, route);
+		var albums = albumsResolver.call(undefined, albumsService, route);
 
 		expect(albumsService.getByGenre).toHaveBeenCalledWith(genre);
 		expect(albums).toBe(expectedAlbums);

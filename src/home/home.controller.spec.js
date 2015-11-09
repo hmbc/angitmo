@@ -23,7 +23,7 @@ describe(moduleName, () => {
 		let albumsService = jasmine.createSpyObj('albumsService', [getTop]);
 		albumsService[getTop].and.returnValue(expectedAlbums);
 
-		var albums = albumsResolver(albumsService);
+		var albums = albumsResolver.call(undefined, albumsService);
 
 		expect(albumsService.getTop).toHaveBeenCalledWith(topAlbumsCount);
 		expect(albums).toBe(expectedAlbums);

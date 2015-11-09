@@ -10,6 +10,7 @@ var karma = require('karma');
 var http = require('gulp-connect');
 var es = require('event-stream');
 var ngAnnotate = require('gulp-ng-annotate');
+var jshint = require('gulp-jshint');
 
 var paths = {
 	src: 'src',
@@ -75,7 +76,9 @@ gulp.task('build-src', function (done) {
 		out: 'build.js'
 	})
 		.pipe(appendLine("$(function(){ require(['main']); });"))
-		//.pipe(uglify())
+		.pipe(jshint())		
+		.pipe(jshint.reporter('default'))
+	//.pipe(uglify())
 		.pipe(gulp.dest(paths.build));
 });
 
@@ -86,6 +89,8 @@ gulp.task('build-unit-test', function (done) {
 		out: 'build.spec.js'
 	})
 		.pipe(appendLine("require(['main.spec']);"))
+		.pipe(jshint())
+		.pipe(jshint.reporter('default'))
 		.pipe(gulp.dest(paths.build));
 });
 
