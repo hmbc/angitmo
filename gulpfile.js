@@ -75,7 +75,7 @@ gulp.task('build-src', function (done) {
 		out: 'build.js'
 	})
 		.pipe(appendLine("$(function(){ require(['main']); });"))
-	//.pipe(uglify())
+		//.pipe(uglify())
 		.pipe(gulp.dest(paths.build));
 });
 
@@ -85,8 +85,7 @@ gulp.task('build-unit-test', function (done) {
 		baseUrl: paths.build,
 		out: 'build.spec.js'
 	})
-		.pipe(appendLine("require(['main.spec']);"))	
-	//.pipe(uglify())
+		.pipe(appendLine("require(['main.spec']);"))
 		.pipe(gulp.dest(paths.build));
 });
 

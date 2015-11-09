@@ -3,7 +3,6 @@ import { default as albumsModuleName } from './module';
 import { default as albumsServiceName } from './albums.service';
 
 export const controllerName = "AlbumsListController";
-
 class AlbumsListController {
 	/*@ngInject*/
 	constructor(albums) {
@@ -12,10 +11,9 @@ class AlbumsListController {
 }
 
 /*@ngInject*/
-export let albumsResolver = (albumsService, $route) => {
+export function albumsResolver(albumsService, $route) {
 	return albumsService.getByGenre($route.current.params.genre);
-
-};
+}
 
 angular
 	.module(albumsModuleName)

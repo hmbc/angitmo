@@ -4,6 +4,11 @@ import { default as albumsServiceName } from './albums.service';
 
 export const controllerName = "AlbumDetailsController";
 
+/*@ngInject*/
+export function albumsResolver(albumsService, $route) {
+	return albumsService.getById($route.current.params.id);
+}
+
 let _album = Symbol();
 class AlbumDetailsController {
 	/*@ngInject*/
@@ -15,12 +20,6 @@ class AlbumDetailsController {
 		return this[_album];
 	}
 }
-
-/*@ngInject*/
-export let albumsResolver = (albumsService, $route) => {
-	return albumsService.getById($route.current.params.id);
-};
-
 
 angular
 	.module(albumModuleName)

@@ -15,7 +15,6 @@ class HomeController {
 		return this[_albums];
 	}
 }
-HomeController.inject = [];
 
 const topAlbumsCount = 6;
 
