@@ -1,0 +1,11 @@
+<section>
+    <div class="container-fluid" ng-if="ctrl.albums.length">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4" ng-repeat="album in ctrl.albums">
+            <a class="album-link" href="/album/{{album.id}}">
+                <img alt="{{album.title}}" src="/images/placeholder.png">
+                <h4>{{album.title}}</h4>
+            </a>
+        </div>
+    </div>
+    <h3 ng-if="!ctrl.albums.length" class="text-center">No albums found!</h3>
+</section>

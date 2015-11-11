@@ -5,7 +5,7 @@ const directiveName = "albumsList";
 
 class AlbumsListDirective {
 	constructor() {
-		this.templateUrl = 'albums/albums-list.html';
+		this.templateUrl = 'albums/albums-list.directive.html';
 		this.restrict = 'E';
 		this.replace = true;
 	}

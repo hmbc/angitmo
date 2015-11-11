@@ -4,6 +4,7 @@ import {} from './albums/album.spec';
 import {} from './albums/album-details.controller.spec';
 import {} from './albums/albums-list.controller.spec';
 import {} from './albums/albums.service.spec';
+import {} from './albums/albums-list.directive.spec';
 
 import {} from './genres/module.spec';
 import {} from './genres/albums-by-genre-link.directive.spec';
