@@ -1,10 +1,10 @@
 exports.config = {
 	allScriptsTimeout: 11000,
 
-	specs: [
-		'*.e2e.js'
-	],
-
+// 	specs: [
+// 		'./build/build.e2e.js'
+// 	],
+// 
 	capabilities: {
 		'browserName': 'chrome'
 	},

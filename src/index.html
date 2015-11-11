@@ -9,42 +9,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="/" class="navbar-brand">ASP.NET MVC Music Store</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/">Home</a></li>
-                    <li class="dropdown">
-                        <a href="/store" data-toggle="dropdown" class="dropdown-toggle">Store <b class="caret"></b></a>
-                        <ul class="dropdown-menu" ng-controller="GenresLinksController as ctrl">
-                            <li ng-repeat="genre in ctrl.genres | limitTo:9">
-                                <albums-by-genre-link ng-model="genre" />
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="/genres">More...</a>
-                            </li>
-                        </ul>
-                    </li>
+    <menu></menu>
 
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/account/register" id="registerLink">Register</a></li>
-                    <li><a href="/account/login" id="loginLink">Log in</a></li>
-                </ul>
-
-            </div>
-        </div>
-    </nav>
     <div class="container body-content view" ng-view=""></div>
 
     <footer class="navbar navbar-fixed-bottom navbar-default text-center">

@@ -11,6 +11,7 @@ var es = require('event-stream');
 var ngAnnotate = require('gulp-ng-annotate');
 var jshint = require('gulp-jshint');
 var angularProtractor = require('gulp-angular-protractor');
+var concat = require('gulp-concat');
 
 var paths = {
 	bower: 'bower_components',
@@ -95,8 +96,15 @@ gulp.task('build-unit-test', function (done) {
 		.pipe(gulp.dest(paths.build));
 });
 
+gulp.task('build-e2e-test', function () {
+	gulp.src(paths.e2e + '/**/*.js')
+		.pipe(jshint())
+		.pipe(jshint.reporter('default'))
+	;
+});
+
 gulp.task('build', ['transpile', 'copy-assets', 'copy-libs'], function () {
-	gulp.start(['build-src', 'build-unit-test']);
+	gulp.start(['build-src', 'build-unit-test', 'build-e2e-test']);
 });
 
 gulp.task('rebuild', ['clean'], function (done) {
@@ -106,14 +114,14 @@ gulp.task('rebuild', ['clean'], function (done) {
 
 gulp.task('e2e', function () {
 	gulp
-		.src([paths.e2e + '/**/*.e2e.js'])
+		.src([paths.e2e + '/**/*.js'])
 		.pipe(angularProtractor({
-			'configFile': paths.e2e + '/protractor.config.js',
+			'configFile': './protractor.config.js',
 			'args': ['--baseUrl', 'http://localhost:8080/'],
 			'autoStartStopServer': true,
-			'debug': true
+			'debug': false
 		}))
-		.on('error', gutil.log)
+		.on('error', gutil.log);
 });
 
 gulp.task('watch', function () {
