@@ -1,6 +1,6 @@
 /* global angular */
 import { default as genresModuleName } from './module';
-import { LazyArray } from '../core/LazyArray'
+import { Lazy } from '../core/lazy'
 
 export const serviceName = "genresService";
 
@@ -12,7 +12,7 @@ class GenresService {
 	}
 
 	getGenres(max) {
-		return new LazyArray(
+		return Lazy.forArray(
 			this[_http].get('api/genres', { params: { max: max } }),
 			(response) => response.data
 		);

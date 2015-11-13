@@ -28,6 +28,6 @@ describe(moduleName + '/' + serviceName, () => {
 
 		var actual = genresService.getGenres();
 		httpBackend.flush();
-		expect(actual).toMatchArray(genres)
+		expect(actual).toMatchArray(genres);
 	}));
 });
