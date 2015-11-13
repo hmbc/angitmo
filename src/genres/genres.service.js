@@ -1,24 +1,29 @@
 /* global angular */
 import { default as genresModuleName } from './module';
+import { LazyArray } from '../core/LazyArray'
 
 export const serviceName = "genresService";
 
-const genres = [
-	'Pop', 'Rock', 'Jazz', 'Metal', 'Electronic', 'Blues', 'Latin', 'Rap',
-	'Classical', 'Alternative', 'Country', 'R&B', 'Indie', 'Punk', 'World'
-];
-
+let _http = Symbol();
 class GenresService {
-	constructor() {
+	/*ngInject*/
+	constructor($http) {
+		this[_http] = $http;
 	}
 
 	getGenres(max) {
-		return genres;
+		return new LazyArray(
+			this[_http].get('api/genres', { params: { max: max } }),
+			(response) => response.data
+		);
 	}
 }
 
-let factory = () => new GenresService();
+/*ngInject*/
+function serviceFactory($http) {
+	return new GenresService($http);
+}
 
 angular
 	.module(genresModuleName)
-	.service(serviceName, factory);
+	.service(serviceName, serviceFactory);

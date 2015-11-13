@@ -6,7 +6,7 @@ var clean = require('gulp-clean');
 var gutil = require('gulp-util');
 var requirejs = require('gulp-requirejs');
 var uglify = require('gulp-uglify');
-var http = require('gulp-connect');
+var http = require('./server/app');
 var es = require('event-stream');
 var ngAnnotate = require('gulp-ng-annotate');
 var jshint = require('gulp-jshint');
@@ -119,7 +119,7 @@ gulp.task('e2e', function () {
 			'configFile': './protractor.config.js',
 			'args': ['--baseUrl', 'http://localhost:8080/'],
 			'autoStartStopServer': true,
-			'debug': false
+			'debug': true
 		}))
 		.on('error', gutil.log);
 });
@@ -129,10 +129,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('http', function () {
-	http.server({
-		root: 'build',
-		livereload: true
-	});
+	http.start();
 });
 
 gulp.task('default', ['rebuild'], function () {

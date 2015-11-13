@@ -1,6 +1,6 @@
 /* global angular */
 const moduleName = "genres";
 
-angular.module(moduleName, []);
+angular.module(moduleName, ['ngResource']);
 
 export default moduleName; 

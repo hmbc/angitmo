@@ -6,7 +6,7 @@ import { controllerName as albumsListControllerName, albumsResolver as albumsLis
 import { controllerName as albumDetailsControllerName, albumsResolver as albumDetailsResolver } from './albums/album-details.controller';
 
 /*@ngInject*/
-function config($routeProvider, $locationProvider) {
+function config($routeProvider, $locationProvider, $resourceProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: '/home/home.html',
@@ -25,9 +25,9 @@ function config($routeProvider, $locationProvider) {
 			}
 		})
 		.when('/album/:id', {
-			templateUrl:'/albums/album-details.html',
+			templateUrl: '/albums/album-details.html',
 			controller: albumDetailsControllerName,
-			controllerAs:'ctrl',
+			controllerAs: 'ctrl',
 			resolve: {
 				album: albumDetailsResolver
 			}
@@ -44,6 +44,9 @@ function config($routeProvider, $locationProvider) {
 		enabled: true,
 		requireBase: false
 	});
+
+	// Don't strip trailing slashes from calculated URLs
+	$resourceProvider.defaults.stripTrailingSlashes = false;
 }
 
 angular

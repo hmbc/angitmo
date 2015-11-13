@@ -1,5 +1,6 @@
 describe('home', function () {
 	beforeEach(function () {
+		//require('./mocks').addMockModule();
 		browser.get('/');
 	});
 
