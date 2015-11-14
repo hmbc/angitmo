@@ -6,7 +6,7 @@
 /* global describe */
 import { default as moduleName } from './module';
 import { serviceName } from './genres.service';
-import {} from '../core/jasmine-matchers';
+import {} from '../utils/jasmine-matchers';
 
 
 describe(moduleName + '/' + serviceName, () => {

@@ -1,6 +1,6 @@
 /* global angular */
 import { default as genresModuleName } from './module';
-import { Lazy } from '../core/lazy'
+import { Lazy } from '../utils/lazy'
 
 export const serviceName = "genresService";
 
