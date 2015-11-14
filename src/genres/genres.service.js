@@ -13,7 +13,7 @@ class GenresService {
 
 	getGenres(max) {
 		return Lazy.forArray(
-			this[_http].get('api/genres', { params: { max: max } }),
+			this[_http].get('/api/genres', { params: { max } }),
 			(response) => response.data
 		);
 	}

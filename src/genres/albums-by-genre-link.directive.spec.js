@@ -16,7 +16,7 @@ describe(moduleName + '/albums-by-genre-link.directive', () => {
 		scope.property = genreName;
 		let element = $compile(angular.element('<albums-by-genre-link ng-model="property" />'))(scope);
 		scope.$digest();
-		expect(element[0].href).toMatch('^.*\/albums\/genre\/' + genreName + '$');
+		expect(element[0].href).toMatch(new RegExp('.*/albums/?\\?genre=' + genreName + '$'));
 		expect(element[0].text).toBe(genreName);
 	}));
 });

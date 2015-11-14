@@ -1,50 +1,39 @@
 /* global $filter */
 /* global angular */
 import { default as albumsModuleName } from './module';
-import { Album } from './album';
+import { Lazy } from '../utils/lazy';
 
 const serviceName = "albumsService";
 
-const albums = [
-	new Album(1, "Slayer"),
-	new Album(2, "Moonspell"),
-	new Album(3, "Możdżer"),
-	new Album(4, "Madball"),
-	new Album(5, "Terror"),
-	new Album(6, "Arkangel"),
-	new Album(7, "Death"),
-	new Album(8, "Antrax"),
-	new Album(9, "Born from Pain"),
-	new Album(10, "zao"),
-	new Album(11, "wolf down"),
-	new Album(12, "mushroomhead"),
-	new Album(13, "The Dillinger Escape Plan"),
-	new Album(14, "Toxic Bonkers")
-];
-
-let _limitTo = Symbol();
-let _filter = Symbol();
+let _http = Symbol();
 class AlbumsService {
 	/*@ngInject*/
-	constructor($filter) {
-		this[_limitTo] = $filter('limitTo');
-		this[_filter] = $filter('filter');
+	constructor($http) {
+		this[_http] = $http;
 	}
 
 	getById(id) {
-		var matching = this[_filter](albums, { id: Number.parseInt(id, 10) }, true);
-		return matching.length ? matching[0] : {};
+		return Lazy.forObject(
+			this[_http].get('/api/album/' + id),
+			response => response.data
+		);
 	}
 
 	getTop(count) {
-		return this[_limitTo](albums, count);
+		return Lazy.forArray(
+			this[_http].get('/api/albums', { params: { count } }),
+			response => response.data
+		);
 	}
 
 	getByGenre(genre) {
-		return this[_filter](albums, { genre: genre }, true);
+		return Lazy.forArray(
+			this[_http].get('/api/albums', { params: { genre } }),
+			response => response.data
+		);
 	}
 }
-let serviceFactory = /*@ngInject*/ ($filter) => new AlbumsService($filter);
+let serviceFactory = /*@ngInject*/ ($http) => new AlbumsService($http);
 
 angular
 	.module(albumsModuleName)

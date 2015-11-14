@@ -3,8 +3,7 @@
 function buildLazy(promise, dataResolver, emptyResultBuilder, updateResult) {
 	var result = emptyResultBuilder();
 	result.$resolved = false;
-	
-	
+		
 	dataResolver = dataResolver || (data => data);
 	promise.then(data => {
 		updateResult(result, dataResolver(data));
@@ -21,7 +20,7 @@ class LazyFactory {
 		return buildLazy(
 			promise,
 			dataResolver,
-			() => { },
+			() => { return {} },
 			(result, data) => angular.extend(result, data)
 		);
 	}

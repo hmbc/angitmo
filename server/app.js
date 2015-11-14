@@ -2,20 +2,10 @@ var connect = require('gulp-connect');
 var bodyParser = require('body-parser');
 var Rest = require('connect-rest');
 
-
-var genres = [
-	'Pop', 'Rock', 'Jazz', 'Metal', 'Electronic', 'Blues', 'Latin', 'Rap',
-	'Classical', 'Alternative', 'Country', 'R&B', 'Indie', 'Punk', 'World'
+var controllers = [
+	require('./controllers/genres'),
+	require('./controllers/albums')
 ];
-
-function getGenres(request) {
-	var max = request.parameters.max;
-	var filter = request.parameters.filter;
-
-	return genres
-		.filter(function (g) { return !!g.match(filter); })
-		.slice(0, max);
-}
 
 function configureRest() {
 	var options = {
@@ -24,7 +14,9 @@ function configureRest() {
 	};
 	var rest = Rest.create(options);
 
-	rest.get('/genres', getGenres);
+	controllers.forEach(function (m) {
+		m.configureRoute(rest);
+	})
 
 	return rest.processRequest();
 }

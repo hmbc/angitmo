@@ -1,5 +1,4 @@
 import {} from './albums/module.spec';
-import {} from './albums/album.spec';
 import {} from './albums/album-details.controller.spec';
 import {} from './albums/albums-list.controller.spec';
 import {} from './albums/albums.service.spec';

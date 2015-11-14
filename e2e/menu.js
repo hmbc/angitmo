@@ -31,11 +31,11 @@ describe('index.html', function () {
 		expect(storeMenuLink.isPresent()).toBe(true);
 	});
 
-	it('genre link should redirect to /albums/genre/:genre', function () {
+	it('genre link should redirect to /albums/genre?genre=', function () {
 		getStoreMenuLink().click();
 		getMenuGenresLinks().first().click();
 
-		expect(browser.getLocationAbsUrl()).toMatch(/albums\/genre\/.+$/);
+		expect(browser.getLocationAbsUrl()).toMatch(/albums\?genre=.+$/);
 	});
 
 	it('store menu has \'more\' link', function () {

@@ -19,7 +19,7 @@ describe('albums', function () {
 
 	it('should show album details', function () {
 		getAlbumLinkElement().click();
-		expect(browser.getLocationAbsUrl()).toMatch(/\/album\/\d$/);
+		expect(browser.getLocationAbsUrl()).toMatch(/\/albums\/\d$/);
 	});
 
 	function getAlbumLinkElement() {

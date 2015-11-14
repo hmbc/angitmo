@@ -25,7 +25,7 @@ describe(moduleName + '/' + serviceName, () => {
 	});
 
 	it('getGenres() returns all genres', inject((genresService) => {
-		httpBackend.expectGET('api/genres').respond(genres);
+		httpBackend.expectGET('/api/genres').respond(genres);
 
 		var actual = genresService.getGenres();
 		httpBackend.flush();

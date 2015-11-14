@@ -1,3 +1,6 @@
+/* global expect */
+/* global inject */
+/* global afterEach */
 /* global angular */
 /* global it */
 /* global fail */
@@ -10,15 +13,45 @@ import { default as serviceName } from './albums.service';
 describe(moduleName + '/' + serviceName, () => {
 	beforeEach(angular.mock.module(moduleName));
 
-	xit('getById returns album by id from resource', () => {
-		fail('not implemented yet!');
+	var httpBackend;
+	var albumsService;
+	beforeEach(inject(($httpBackend, _albumsService_) => {
+		httpBackend = $httpBackend;
+		console.log(albumsService);
+		albumsService = _albumsService_;
+	}));
+
+	afterEach(() => {
+		httpBackend.verifyNoOutstandingExpectation();
+		httpBackend.verifyNoOutstandingRequest();
 	});
 
-	xit('getTop returns top x albums', () => {
-		fail('not implemented yet!');
+	it('getById returns album by id from resource', () => {
+		const id = 1;
+		let expected = { id };
+		httpBackend.expectGET('/api/album/' + id).respond(expected);
+
+		var actual = albumsService.getById(id);
+
+		httpBackend.flush();
+		expect(actual.id).toBe(id);
 	});
 
-	xit('getByGenre returns albums with specyfied genre', () => {
-		fail('not implemented yet!');
+	it('getTop returns top x albums', () => {
+		const count = 2;
+		httpBackend.expectGET('/api/albums?count=' + count).respond([]);
+
+		albumsService.getTop(count);
+
+		httpBackend.flush();
+	});
+
+	it('getByGenre returns albums with specyfied genre', () => {
+		const genreName = "genre-name";
+		httpBackend.expectGET('/api/albums?genre=' + genreName).respond([]);
+
+		albumsService.getByGenre(genreName);
+
+		httpBackend.flush();
 	});
 });

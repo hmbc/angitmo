@@ -16,15 +16,7 @@ function config($routeProvider, $locationProvider, $resourceProvider) {
 				albums: homeControllerAlbumsResolver
 			}
 		})
-		.when('/albums/genre/:genre', {
-			templateUrl: '/albums/albums-list.html',
-			controller: albumsListControllerName,
-			controllerAs: 'ctrl',
-			resolve: {
-				albums: albumsListControllerResolver
-			}
-		})
-		.when('/album/:id', {
+		.when('/albums/:id', {
 			templateUrl: '/albums/album-details.html',
 			controller: albumDetailsControllerName,
 			controllerAs: 'ctrl',
@@ -32,6 +24,14 @@ function config($routeProvider, $locationProvider, $resourceProvider) {
 				album: albumDetailsResolver
 			}
 
+		})
+		.when('/albums', {
+			templateUrl: '/albums/albums-list.html',
+			controller: albumsListControllerName,
+			controllerAs: 'ctrl',
+			resolve: {
+				albums: albumsListControllerResolver
+			}
 		})
 		.when('/genres', {
 			templateUrl: '/genres/genres-list.html',
