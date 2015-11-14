@@ -1,3 +1,4 @@
+/* global angular */
 /* global afterEach */
 /* global expect */
 /* global inject */
@@ -13,7 +14,7 @@ describe(moduleName + '/' + serviceName, () => {
 	const genres = ['1', '2', '3'];
 	var httpBackend;
 
-	beforeEach(module(moduleName));
+	beforeEach(angular.mock.module(moduleName));
 	beforeEach(inject(($httpBackend) => {
 		httpBackend = $httpBackend;
 	}));

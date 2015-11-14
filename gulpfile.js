@@ -42,7 +42,8 @@ gulp.task('clean', function () {
 gulp.task('transpile', function () {
     return gulp.src([paths.src + '/**/*.js'])
 		.pipe(babel({
-			modules: "amd"
+			presets: ['es2015'],
+			plugins: ["transform-es2015-modules-amd"]
 		}))
 		.pipe(ngAnnotate())
 		.pipe(gulp.dest(paths.build));

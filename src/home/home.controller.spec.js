@@ -1,3 +1,4 @@
+/* global angular */
 /* global jasmine */
 /* global expect */
 /* global beforeEach */
@@ -8,7 +9,7 @@ import { default as moduleName } from './module';
 import { controllerName, albumsResolver } from './home.controller';
 
 describe(moduleName, () => {
-	beforeEach(module(moduleName));
+	beforeEach(angular.mock.module(moduleName));
 	it(controllerName + ' has albums property', inject(($controller) => {
 		let albums = [{}, {}, {}];
 		let controller = $controller(controllerName, { albums });

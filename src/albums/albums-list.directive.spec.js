@@ -10,7 +10,7 @@ import {} from './albums-list.directive';
 describe(moduleName + '/albums-list.directive', () => {
 	const template = "<div>abc</div>";
 
-	beforeEach(module(moduleName));
+	beforeEach(angular.mock.module(moduleName));
 	beforeEach(inject(($templateCache) => {
 		$templateCache.put('albums/albums-list.directive.html', template);
 	}));

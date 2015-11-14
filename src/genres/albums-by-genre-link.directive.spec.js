@@ -8,7 +8,7 @@ import { default as moduleName } from './module';
 import {} from './albums-by-genre-link.directive';
 
 describe(moduleName + '/albums-by-genre-link.directive', () => {
-	beforeEach(module(moduleName));
+	beforeEach(angular.mock.module(moduleName));
 
 	it('render proper element', inject(($compile, $rootScope) => {
 		const genreName = 'genre-name';

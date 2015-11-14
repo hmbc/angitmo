@@ -1,3 +1,4 @@
+/* global angular */
 /* global jasmine */
 /* global expect */
 /* global inject */
@@ -9,7 +10,7 @@ import { controllerName } from './genres-links.controller';
 import { serviceName as genresServiceName } from '../genres/genres.service';
 
 describe(moduleName + '/' + controllerName, () => {
-	beforeEach(module(moduleName));
+	beforeEach(angular.mock.module(moduleName));
 
 	it('get genres from genres service', inject(($controller) => {
 		let genres = [{}, {}, {}];

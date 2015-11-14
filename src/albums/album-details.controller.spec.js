@@ -1,3 +1,4 @@
+/* global angular */
 /* global jasmine */
 /* global spyOn */
 /* global expect */
@@ -10,7 +11,7 @@ import { controllerName, albumsResolver } from './album-details.controller';
 import { } from './albums.service';
 
 describe('albums/album-details', () => {
-	beforeEach(module(moduleName));
+	beforeEach(angular.mock.module(moduleName));
 
 	it(controllerName + ' has immutable album property', inject(($controller) => {
 		const album = {};
