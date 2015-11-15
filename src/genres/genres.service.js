@@ -11,9 +11,9 @@ class GenresService {
 		this[_http] = $http;
 	}
 
-	getGenres(max) {
-		return Lazy.forArray(
-			this[_http].get('/api/genres', { params: { max } }),
+	getGenres(params) {
+		return Lazy.forObject(
+			this[_http].get('/api/genres', { params: params }),
 			(response) => response.data
 		);
 	}

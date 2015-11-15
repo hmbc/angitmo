@@ -16,11 +16,11 @@ function buildLazy(promise, dataResolver, emptyResultBuilder, updateResult) {
 }
 
 class LazyFactory {
-	forObject(promise, dataResolver) {
+	forObject(promise, dataResolver, emptyResultBuiler) {
 		return buildLazy(
 			promise,
 			dataResolver,
-			() => { return {} },
+			emptyResultBuiler || (() => { return {} }),
 			(result, data) => angular.extend(result, data)
 		);
 	}

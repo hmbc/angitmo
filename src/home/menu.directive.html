@@ -14,7 +14,7 @@
 				<li class="dropdown">
 					<a class="store-menu-link" href="/store" data-toggle="dropdown" class="dropdown-toggle">Store <b class="caret"></b></a>
 					<ul class="dropdown-menu" ng-controller="GenresLinksController as ctrl">
-						<li ng-repeat="genre in ctrl.genres">
+						<li ng-repeat="genre in ctrl.genres.genres">
 							<albums-by-genre-link ng-model="genre" />
 						</li>
 						<li class="divider"></li>

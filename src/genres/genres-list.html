@@ -1,10 +1,25 @@
 <h3>Browse Genres</h3>
 
-<p>
-    Select from {{ctrl.count}} genres:
-</p>
-<ul class="list-group">
-	<li class="list-group-item" ng-repeat="genre in ctrl.genres">
-		<albums-by-genre-link ng-model="genre" />
-	</li>
-</ul>
+<form ng-submit="ctrl.search()">
+	<div class="container">
+		<div class="col-md-3-offset col-md-6">
+			<input type="text" class="form-control" ng-model="ctrl.genresFilter" placeholder="filter from {{ctrl.genres.total}} genres"
+			/>
+		</div>
+	</div>
+</form>
+
+<div class="container">
+	<div class="row">
+	<div class="col-md-3-offset col-md-6">
+		<ul class="list-group">
+			<li class="list-group-item" ng-repeat="genre in ctrl.genres.genres">
+				<albums-by-genre-link ng-model="genre" />
+			</li>
+		</ul>
+	</div>
+	</div>
+	<div class="row">
+		<button class="btn btn-default" ng-click="ctrl.more()">more...</button>
+	</div>
+</div>

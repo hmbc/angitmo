@@ -12,7 +12,6 @@ class AlbumsListController {
 
 /*@ngInject*/
 export function albumsResolver(albumsService, $route) {
-	console.log($route.current.params.genre);
 	return albumsService.getByGenre($route.current.params.genre);
 }
 

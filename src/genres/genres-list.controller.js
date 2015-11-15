@@ -4,21 +4,41 @@ import { serviceName as genresServiceName } from './genres.service';
 
 export const controllerName = "GenresListController";
 
-let _genres = Symbol();
+
+let _genresService = Symbol();
 class GenresListController {
 	/*@ngInject*/
-	constructor(genresService) {
-		this[_genres] = genresService.getGenres();
+	constructor(genres, genresService) {
+		this.genres = genres;
+		this.max = 10;
+		this[_genresService] = genresService;
 	}
-
-	get genres() {
-		return this[_genres];
+	
+	search() {
+		this.max = 10;
+		this._search();
 	}
-
-	get count() {
-		return this.genres.length;
+	
+	more(){
+		this.max = this.max + 10;
+		this._search();
+	}
+	
+	_search(){
+		this.genres = this[_genresService].getGenres({
+			filter: this.genresFilter,
+			max: this.max
+		});
 	}
 }
+
+
+
+/*@ngInject*/
+export function genresResolver(genresService) {
+	return genresService.getGenres();
+}
+
 
 angular
 	.module(genresModuleName)

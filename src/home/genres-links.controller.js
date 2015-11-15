@@ -9,7 +9,7 @@ let _genres = Symbol();
 class GenresLinksController {
   /*@ngInject*/
   constructor(genresService) {
-    this[_genres] = genresService.getGenres(9);
+    this[_genres] = genresService.getGenres({ max: 9 });
   }
 
   get genres() {

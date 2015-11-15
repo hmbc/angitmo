@@ -1,7 +1,7 @@
 /* global angular */
 import { default as homeModuleName } from './home/module'
 import { controllerName as homeControllerName, albumsResolver as homeControllerAlbumsResolver } from './home/home.controller'
-import { controllerName as genresListConrollerName } from './genres/genres-list.controller'
+import { controllerName as genresListConrollerName, genresResolver as genresListControllerResolver } from './genres/genres-list.controller'
 import { controllerName as albumsListControllerName, albumsResolver as albumsListControllerResolver } from './albums/albums-list.controller';
 import { controllerName as albumDetailsControllerName, albumsResolver as albumDetailsResolver } from './albums/album-details.controller';
 
@@ -36,7 +36,10 @@ function config($routeProvider, $locationProvider, $resourceProvider) {
 		.when('/genres', {
 			templateUrl: '/genres/genres-list.html',
 			controller: genresListConrollerName,
-			controllerAs: 'ctrl'
+			controllerAs: 'ctrl',
+			resolve: {
+				genres: genresListControllerResolver 
+			}
 		})
 		.otherwise({ redirectTo: '/' });
 
