@@ -12,11 +12,17 @@ describe(moduleName + '/albums-by-genre-link.directive', () => {
 
 	it('render proper element', inject(($compile, $rootScope) => {
 		const genreName = 'genre-name';
+		let genre = { 
+			genre: genreName, 
+			albumsCount: 0 
+		};
 		let scope = $rootScope;
-		scope.property = genreName;
+		scope.property = genre;
+		
 		let element = $compile(angular.element('<albums-by-genre-link ng-model="property" />'))(scope);
+		
 		scope.$digest();
 		expect(element[0].href).toMatch(new RegExp('.*/albums/?\\?genre=' + genreName + '$'));
-		expect(element[0].text).toBe(genreName);
+		expect(element[0].text).toMatch(genreName);
 	}));
 });

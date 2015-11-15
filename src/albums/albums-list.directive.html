@@ -3,7 +3,7 @@
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4" ng-repeat="album in ctrl.albums">
             <a class="album-link" href="/albums/{{album.id}}">
                 <img alt="{{album.title}}" src="/images/placeholder.png">
-                <h4>{{album.title}}</h4>
+                <h4>{{album.artist}} - {{album.title}}</h4>
             </a>
         </div>
     </div>
