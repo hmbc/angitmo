@@ -14,11 +14,11 @@ function Client() {
 	});
 
 	self.removeIndex = function () {
-		console.log('deleting index', _indexName);
-
-		client.indices.delete({
-			index: _indexName
-		});
+		var index = { index: _indexName };
+		if (client.indices.exists(index)) {
+			console.log('deleting index', _indexName);
+			client.indices.delete(index);
+		};
 	}
 
 	self.index = function (data, cb) {
@@ -42,9 +42,9 @@ function Client() {
 			_source: true,
 			id: id
 		})
-		.then(function(data){
-			return extend(true, {}, data, { id: id });
-		});
+			.then(function (data) {
+				return extend(true, {}, data, { id: id });
+			});
 	}
 
 	self.searchByGenre = function (genre, size) {
@@ -67,13 +67,13 @@ function Client() {
 
 		return client
 			.search(search)
-			.then(function(data){
+			.then(function (data) {
 				return data.hits.hits.map(function (h) { return extend(true, {}, h._source, { id: h._id }) });
 			});
 	}
 
 	self.getGenres = function (filter, max) {
-		if (filter){
+		if (filter) {
 			return client.search({
 				index: _indexName,
 				'type': _typeName,
@@ -103,18 +103,18 @@ function Client() {
 					}
 				}
 			})
-			.then(function(data){
-				return {
-					genres: data.aggregations.genres.genres.buckets.map(function (b) { 
-						return {
-							genre: b.key,
-							albumsCount: b.doc_count
-						}; 
-					}),
-					total: data.aggregations.genres_count.value
-				};
-			});
-		}else{
+				.then(function (data) {
+					return {
+						genres: data.aggregations.genres.genres.buckets.map(function (b) {
+							return {
+								genre: b.key,
+								albumsCount: b.doc_count
+							};
+						}),
+						total: data.aggregations.genres_count.value
+					};
+				});
+		} else {
 			return client.search({
 				index: _indexName,
 				'type': _typeName,
@@ -123,7 +123,7 @@ function Client() {
 					aggs: {
 						genres: {
 							terms: {
-								field:'genre',
+								field: 'genre',
 								size: max || 10,
 							}
 						},
@@ -135,19 +135,19 @@ function Client() {
 					}
 				}
 			})
-			.then(function(data){
-				return {
-					genres: data.aggregations.genres.buckets.map(function (b) { 
-						return {
-							genre: b.key,
-							albumsCount: b.doc_count
-						}; 
-					}),
-					total: data.aggregations.genres_count.value
-				};
-			});
+				.then(function (data) {
+					return {
+						genres: data.aggregations.genres.buckets.map(function (b) {
+							return {
+								genre: b.key,
+								albumsCount: b.doc_count
+							};
+						}),
+						total: data.aggregations.genres_count.value
+					};
+				});
 		}
-		
+
 	}
 }
 

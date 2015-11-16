@@ -1,6 +1,6 @@
 /* global process */
 var reader = require('line-reader');
-var client = require('./client');
+var client = require('./store-repository');
 
 var args = {};
 
