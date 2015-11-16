@@ -73,36 +73,40 @@ function Client() {
 	}
 
 	self.getGenres = function (filter, max) {
+		var genresAgg = {
+			terms: {
+				field: "genre",
+				size: max
+			}
+		};
+		var genresCountAgg = {
+			cardinality: {
+				field: 'genre'
+			}
+		};
+
 		if (filter) {
-			return client.search({
-				index: _indexName,
-				'type': _typeName,
-				size: 0,
-				body: {
-					aggs: {
-						genres: {
-							filter: {
-								term: {
-									genre: filter
+			return client
+				.search({
+					index: _indexName,
+					'type': _typeName,
+					size: 0,
+					body: {
+						aggs: {
+							genres: {
+								filter: {
+									term: {
+										genre: filter
+									}
+								},
+								aggs: {
+									genres: genresAgg
 								}
 							},
-							aggs: {
-								genres: {
-									terms: {
-										field: "genre",
-										size: max || 10
-									}
-								}
-							}
-						},
-						genres_count: {
-							cardinality: {
-								field: 'genre'
-							}
+							genres_count: genresCountAgg
 						}
 					}
-				}
-			})
+				})
 				.then(function (data) {
 					return {
 						genres: data.aggregations.genres.genres.buckets.map(function (b) {
@@ -115,26 +119,18 @@ function Client() {
 					};
 				});
 		} else {
-			return client.search({
-				index: _indexName,
-				'type': _typeName,
-				size: 0,
-				body: {
-					aggs: {
-						genres: {
-							terms: {
-								field: 'genre',
-								size: max || 10,
-							}
-						},
-						genres_count: {
-							cardinality: {
-								field: 'genre'
-							}
+			return client
+				.search({
+					index: _indexName,
+					'type': _typeName,
+					size: 0,
+					body: {
+						aggs: {
+							genres: genresAgg,
+							genres_count: genresCountAgg
 						}
 					}
-				}
-			})
+				})
 				.then(function (data) {
 					return {
 						genres: data.aggregations.genres.buckets.map(function (b) {

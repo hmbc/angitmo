@@ -5,12 +5,11 @@ function buildLazy(promise, dataResolver, emptyResultBuilder, updateResult) {
 	result.$resolved = false;
 		
 	dataResolver = dataResolver || (data => data);
-	promise.then(data => {
+	result.$promise = promise.then(data => {
 		updateResult(result, dataResolver(data));
 		result.$resolved = true;
+		return result;
 	});
-
-	result.$promise = promise;
 
 	return result;
 }

@@ -59,16 +59,17 @@ gulp.task('copy-assets', function () {
 })
 
 gulp.task('copy-libs', function () {
-	return gulp.src([
-		paths.bower + "/**/*.js",
-		paths.bower + '/**/*.css',
+	return gulp
+		.src([
+			paths.bower + "/**/*.js",
+			paths.bower + '/**/*.css',
 
-		paths.bower + '/**/*.eot',
-		paths.bower + '/**/*.svg',
-		paths.bower + '/**/*.ttf',
-		paths.bower + '/**/*.woff',
-		paths.bower + '/**/*.woff2'
-	])
+			paths.bower + '/**/*.eot',
+			paths.bower + '/**/*.svg',
+			paths.bower + '/**/*.ttf',
+			paths.bower + '/**/*.woff',
+			paths.bower + '/**/*.woff2'
+		])
 		.pipe(gulp.dest(paths.build + '/bower_components'));
 });
 

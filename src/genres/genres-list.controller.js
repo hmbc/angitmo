@@ -11,23 +11,28 @@ class GenresListController {
 	constructor(genres, genresService) {
 		this.genres = genres;
 		this.max = 10;
+		this.skip = 0;
 		this[_genresService] = genresService;
 	}
-	
+
 	search() {
-		this.max = 10;
-		this._search();
+		this.skip = 0;
+		this.genres = this._search();
 	}
-	
-	more(){
-		this.max = this.max + 10;
-		this._search();
+
+	loadMore() {
+		this.skip = this.skip + 10;
+		this._search().$promise.then(data => {
+			this.genres.total = data.total;
+			data.genres.forEach(g => this.genres.genres.push(g));
+		});
 	}
-	
-	_search(){
-		this.genres = this[_genresService].getGenres({
+
+	_search() {
+		return this[_genresService].getGenres({
 			filter: this.genresFilter,
-			max: this.max
+			max: this.max,
+			skip: this.skip
 		});
 	}
 }
