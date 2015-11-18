@@ -8,7 +8,7 @@ function AlbumsController() {
 
 		return callback(null, function (cb) {
 			return client
-				.get(id)
+				.getAlbum(id)
 				.then(function (data) {
 					cb(null, data);
 				});
@@ -21,7 +21,7 @@ function AlbumsController() {
 
 		return callback(null, function (cb) {
 			client
-				.searchByGenre(genre, count)
+				.searchAlbumsByGenre(genre, count)
 				.then(function (data) {
 					cb(null, data);
 				});

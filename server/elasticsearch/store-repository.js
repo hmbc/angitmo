@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var elasticsearch = require('elasticsearch');
 var extend = require('extend');
 
@@ -5,7 +6,8 @@ function Client() {
 	var self = this;
 
 	var _indexName = 'musicstore';
-	var _typeName = 'disc';
+	var _albumTypeName = 'album';
+	var _genreTypeName = 'genre';
 
 
 	var client = new elasticsearch.Client({
@@ -13,41 +15,83 @@ function Client() {
 		log: 'warning'
 	});
 
-	self.removeIndex = function () {
-		var index = { index: _indexName };
-		if (client.indices.exists(index)) {
-			console.log('deleting index', _indexName);
-			client.indices.delete(index);
-		};
+	function putMapping(typeName, mapping) {
+		console.log('mapping', typeName, mapping);
+		return client
+			.indices
+			.putMapping({
+				index: _indexName,
+				'type': typeName,
+				body: mapping
+			});
 	}
 
-	self.index = function (data, cb) {
-		client
+	function createIndex() {
+		return client
+			.indices
+			.create({ index: _indexName })
+			.then(function (data) {
+				console.log('index created', data);
+				var mapping = require('./mapping.json');
+
+				return Promise.all([
+					putMapping(_albumTypeName, { album: mapping.album }),
+					putMapping(_genreTypeName, { genre: mapping.genre })
+				]);
+			});
+	}
+
+	self.recreateIndex = function () {
+		var index = { index: _indexName };
+		return client
+			.indices
+			.exists(index)
+			.then(function (indexExists) {
+				if (indexExists) {
+					return client
+						.indices
+						.delete(index)
+						.then(function () {
+							return createIndex();
+						});
+				} else {
+					return createIndex();
+				}
+			});
+	}
+
+	function index(typeName, data) {
+		return client
 			.index({
 				'index': _indexName,
-				'type': _typeName,
+				'type': typeName,
 				'body': data
-			})
-			.then(function () {
-				cb();
-			})
-
+			});
 	}
 
-	self.get = function (id) {
-		return client.getSource({
-			index: _indexName,
-			'type': _typeName,
-			realtime: true,
-			_source: true,
-			id: id
-		})
+	self.indexAlbum = function (data) {
+		return index(_albumTypeName, data);
+	}
+
+	self.indexGenre = function (data) {
+		return index(_genreTypeName, data);
+	}
+
+	self.getAlbum = function (id) {
+		return client
+			.getSource({
+				index: _indexName,
+				'type': _albumTypeName,
+				album: true,
+				_source: true,
+				id: id
+			})
 			.then(function (data) {
 				return extend(true, {}, data, { id: id });
 			});
 	}
 
-	self.searchByGenre = function (genre, size) {
+	self.searchAlbumsByGenre = function (genre, size) {
 		var query = { match_all: {} };
 		if (genre) {
 			query = {
@@ -59,7 +103,7 @@ function Client() {
 
 		var search = {
 			index: _indexName,
-			'type': _typeName,
+			'type': _albumTypeName,
 			size: size || 10,
 			_source: true,
 			body: { query: query }
@@ -72,78 +116,31 @@ function Client() {
 			});
 	}
 
-	self.getGenres = function (filter, max) {
-		var genresAgg = {
-			terms: {
-				field: "genre",
-				size: max
-			}
-		};
-		var genresCountAgg = {
-			cardinality: {
-				field: 'genre'
-			}
-		};
-
+	self.getGenres = function (filter, max, skip) {
+		var query = { match_all: {} };
 		if (filter) {
-			return client
-				.search({
-					index: _indexName,
-					'type': _typeName,
-					size: 0,
-					body: {
-						aggs: {
-							genres: {
-								filter: {
-									term: {
-										genre: filter
-									}
-								},
-								aggs: {
-									genres: genresAgg
-								}
-							},
-							genres_count: genresCountAgg
-						}
-					}
-				})
-				.then(function (data) {
-					return {
-						genres: data.aggregations.genres.genres.buckets.map(function (b) {
-							return {
-								genre: b.key,
-								albumsCount: b.doc_count
-							};
-						}),
-						total: data.aggregations.genres_count.value
-					};
-				});
-		} else {
-			return client
-				.search({
-					index: _indexName,
-					'type': _typeName,
-					size: 0,
-					body: {
-						aggs: {
-							genres: genresAgg,
-							genres_count: genresCountAgg
-						}
-					}
-				})
-				.then(function (data) {
-					return {
-						genres: data.aggregations.genres.buckets.map(function (b) {
-							return {
-								genre: b.key,
-								albumsCount: b.doc_count
-							};
-						}),
-						total: data.aggregations.genres_count.value
-					};
-				});
+			query = {
+				match: {
+					"name.filter": filter
+				}
+			}
 		}
 
+		var search = {
+			index: _indexName,
+			'type': _genreTypeName,
+			size: max || 10,
+			'from': skip || 0,
+			_source: true,
+			sort: 'count:desc',
+			body: { query: query }
+		};
+
+		return client
+			.search(search)
+			.then(function (data) {
+				return data.hits.hits.map(function (h) { return extend(true, {}, h._source, { id: h._id }) });
+			});
 	}
 }
 

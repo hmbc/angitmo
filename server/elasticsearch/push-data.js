@@ -1,12 +1,16 @@
 /* global process */
 var reader = require('line-reader');
-var client = require('./store-repository');
+var repository = require('./store-repository');
+var path = require('path');
 
 var args = {};
 
 parseArgs();
-removeIndex();
-readLinesAndSendToElasticsearch();
+recreateIndex()
+    .then(function () {
+        readLinesAndIndex('album.json', repository.indexAlbum);
+        readLinesAndIndex('genre.json', repository.indexGenre);
+    });
 
 function parseArgs() {
     args = {
@@ -19,14 +23,16 @@ function parseArgs() {
     }
 }
 
-function removeIndex() {
-    client.removeIndex();
+function recreateIndex() {
+    return repository.recreateIndex();
 }
 
-function readLinesAndSendToElasticsearch() {
+function readLinesAndIndex(fileName, index) {
     var readedLines = 0;
 
-    reader.eachLine(args.filePath, { encoding: 'utf8', bufferSize: 1024 * 1024 }, function (line, last, cb) {
+    var fullFilePath = path.join(args.filePath, fileName);
+
+    reader.eachLine(fullFilePath, { encoding: 'utf8', bufferSize: 1024 * 1024 }, function (line, last, cb) {
         line = removeBom(line);
 
         if (line.length > 0) { // ignore empty lines
@@ -35,7 +41,7 @@ function readLinesAndSendToElasticsearch() {
             }
             var obj = JSON.parse(line); // parse the JSON
 		
-            client.index(obj, cb);
+            index(obj).asCallback(cb);
             readedLines++;
         }
     });

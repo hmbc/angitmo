@@ -13,8 +13,8 @@ describe(moduleName + '/albums-by-genre-link.directive', () => {
 	it('render proper element', inject(($compile, $rootScope) => {
 		const genreName = 'genre-name';
 		let genre = { 
-			genre: genreName, 
-			albumsCount: 0 
+			name: genreName, 
+			count: 0 
 		};
 		let scope = $rootScope;
 		scope.property = genre;

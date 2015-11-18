@@ -11,9 +11,7 @@ import {} from '../utils/jasmine-matchers';
 
 
 describe(moduleName + '/' + serviceName, () => {
-	const genres = {
-		genres: ['1', '2', '3']
-	};
+	const genres = ['1', '2', '3'];
 	var httpBackend;
 
 	beforeEach(angular.mock.module(moduleName));
@@ -31,6 +29,6 @@ describe(moduleName + '/' + serviceName, () => {
 
 		var actual = genresService.getGenres();
 		httpBackend.flush();
-		expect(actual.genres).toMatchArray(genres.genres);
+		expect(actual).toMatchArray(genres);
 	}));
 });

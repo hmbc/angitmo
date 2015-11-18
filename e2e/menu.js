@@ -35,7 +35,7 @@ describe('index.html', function () {
 		getStoreMenuLink().click();
 		getMenuGenresLinks().first().click();
 
-		expect(browser.getLocationAbsUrl()).toMatch(/albums\?genre=.+$/);
+		expect(browser.getLocationAbsUrl()).toMatch(/albums\?genre=.*$/);
 	});
 
 	it('store menu has \'more\' link', function () {

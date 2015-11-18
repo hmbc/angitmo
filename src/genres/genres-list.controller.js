@@ -23,8 +23,7 @@ class GenresListController {
 	loadMore() {
 		this.skip = this.skip + 10;
 		this._search().$promise.then(data => {
-			this.genres.total = data.total;
-			data.genres.forEach(g => this.genres.genres.push(g));
+			data.forEach(g => this.genres.push(g));
 		});
 	}
 

@@ -5,7 +5,7 @@ const directiveName = "albumsByGenreLink";
 
 class AlbumsByGenreLinkDirective {
 	constructor() {
-		this.template = '<a href="/albums?genre={{ngModel.genre}}">{{ngModel.genre}} <span class="badge">{{ngModel.albumsCount}}</span> </a>';
+		this.template = '<a href="/albums?genre={{ngModel.name}}">{{ngModel.name||"n/d"}} <span class="badge">{{ngModel.count}}</span> </a>';
 		this.restrict = 'E';
 		this.require = '=ngModel';
 		this.scope = { ngModel: '=' };

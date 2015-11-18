@@ -12,7 +12,7 @@ class GenresService {
 	}
 
 	getGenres(params) {
-		return Lazy.forObject(
+		return Lazy.forArray(
 			this[_http].get('/api/genres', { params: params }),
 			(response) => response.data
 		);

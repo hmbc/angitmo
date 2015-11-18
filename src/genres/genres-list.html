@@ -4,7 +4,7 @@
 	<div class="col-md-offset-3 col-md-6">
 		<div class="row">
 			<form ng-submit="ctrl.search()">
-				<input type="text" class="form-control" ng-model="ctrl.genresFilter" placeholder="filter from {{ctrl.genres.total}} genres"
+				<input type="text" class="form-control" ng-model="ctrl.genresFilter" placeholder="search genres"
 				/>
 			</form>
 		</div>
@@ -12,7 +12,7 @@
 		<div class="row">
 			<div class="container-fluid">
 				<ul class="list-group">
-					<albums-by-genre-link class="list-group-item" ng-model="genre" ng-repeat="genre in ctrl.genres.genres"></albums-by-genre-link>
+					<albums-by-genre-link class="list-group-item" ng-model="genre" ng-repeat="genre in ctrl.genres"></albums-by-genre-link>
 					<a href="" class="list-group-item" ng-click="ctrl.loadMore()">more...</a>
 				</ul>
 			</div>
