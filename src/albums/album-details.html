@@ -17,6 +17,10 @@
 			<em>Price:</em>
 			<label>{{ctrl.album.price | currency}}</label>
 		</p>
+		<p>
+			Track list:
+			<p ng-repeat="track in ctrl.album.tracks">{{$index + 1}}. {{track}}</p>
+		</p>
 		<p class="button">
 			<a href="/shopping-cart/add/{{ctrl.album.id}}">Add to cart</a>
 		</p>
