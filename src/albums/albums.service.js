@@ -16,21 +16,22 @@ class AlbumsService {
 		return Lazy.forObject(
 			this[_http].get('/api/album/' + id),
 			response => response.data
-		);
+			);
 	}
 
 	getTop(count) {
-		return Lazy.forArray(
-			this[_http].get('/api/albums', { params: { count } }),
-			response => response.data
-		);
+		return this.getByFilter({ count });
 	}
 
 	getByGenre(genre) {
+		return this.getByFilter({ genre });
+	}
+
+	getByFilter(params) {
 		return Lazy.forArray(
-			this[_http].get('/api/albums', { params: { genre } }),
+			this[_http].get('/api/albums', { params }),
 			response => response.data
-		);
+			);
 	}
 }
 let serviceFactory = /*@ngInject*/ ($http) => new AlbumsService($http);

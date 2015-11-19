@@ -91,20 +91,35 @@ function Client() {
 			});
 	}
 
-	self.searchAlbumsByGenre = function (genre, size) {
+	self.searchAlbums = function (params, size, skip) {
 		var query = { match_all: {} };
-		if (genre) {
+		params = params || {};
+		var must = [];
+		if (params.genre !== undefined && params.genre !== null) {
+			must.push({
+				match: { genre: params.genre }
+			});
+		}
+
+		if (params.text) {
+			must.push({
+				term: { _all: params.text }
+			});
+		}
+
+		if (must.length) {
 			query = {
-				match: {
-					genre: genre
+				bool: {
+					must: must
 				}
-			}
+			};
 		}
 
 		var search = {
 			index: _indexName,
 			'type': _albumTypeName,
-			size: size || 10,
+			size: size || 12,
+			'from': skip || 0,
 			_source: true,
 			body: { query: query }
 		};

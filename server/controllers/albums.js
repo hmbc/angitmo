@@ -18,10 +18,12 @@ function AlbumsController() {
 	function getAlbums(request, content, callback) {
 		var genre = request.parameters.genre;
 		var count = request.parameters.count;
+		var skip = request.parameters.skip;
+		var text = request.parameters.text;
 
 		return callback(null, function (cb) {
 			client
-				.searchAlbumsByGenre(genre, count)
+				.searchAlbums({ genre: genre, text: text }, count, skip)
 				.then(function (data) {
 					cb(null, data);
 				});
