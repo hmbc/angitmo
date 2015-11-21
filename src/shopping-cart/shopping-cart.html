@@ -1,0 +1,11 @@
+<div class="container">
+	<h3>Shopping cart</h3>
+	
+	<ul>
+		<li ng-repeat="position in ctrl.positions">
+			<strong>{{position.title}}</strong> <em>{{position.artist}}</em> {{position.price | currency}} {{position.count}} {{position.price * position.count | currency}}
+		</li>
+	</ul>
+	
+	<button class="btn btn-primary">Checkout</button>
+</div>

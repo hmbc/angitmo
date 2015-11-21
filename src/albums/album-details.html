@@ -3,7 +3,7 @@
 	<h2>{{ctrl.album.title}}</h2>
 
 	<p>
-		<img alt="{{ctrl.album.name}}" src="/images/placeholder.png">
+		<img alt="{{ctrl.album.title}}" src="/images/placeholder.png">
 	</p>
 
 	<div id="album-details">
@@ -21,8 +21,8 @@
 			Track list:
 			<p ng-repeat="track in ctrl.album.tracks">{{$index + 1}}. {{track}}</p>
 		</p>
-		<p class="button">
-			<a href="/shopping-cart/add/{{ctrl.album.id}}">Add to cart</a>
+		<p>
+			<button ng-click="ctrl.addToCart()" class="btn btn-primary">Add to cart</button>
 		</p>
 	</div>
 </div>

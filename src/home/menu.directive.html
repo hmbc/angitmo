@@ -25,7 +25,9 @@
 				</li>
 
 			</ul>
-
+			<ul class="nav navbar-nav" ng-controller="MenuShoppingCartController as ctrl" ng-hide="ctrl.isEmpty">
+				<li><a href="/shopping-cart">Cart <span class="badge">{{ctrl.totalCount}}</span></a></li>
+			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="/account/register" id="registerLink">Register</a></li>
 				<li><a href="/account/login" id="loginLink">Log in</a></li>

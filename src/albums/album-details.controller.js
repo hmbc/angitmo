@@ -1,6 +1,5 @@
 /* global angular */
 import { default as albumModuleName } from './module';
-import { default as albumsServiceName } from './albums.service';
 
 export const controllerName = "AlbumDetailsController";
 
@@ -10,14 +9,20 @@ export function albumsResolver(albumsService, $route) {
 }
 
 let _album = Symbol();
+let _scope = Symbol();
 class AlbumDetailsController {
 	/*@ngInject*/
-	constructor(album) {
+	constructor(album, $scope) {
 		this[_album] = album;
+		this[_scope] = $scope;
 	}
 
 	get album() {
 		return this[_album];
+	}
+
+	addToCart() {
+		this[_scope].$emit('addAlbumToCart', this[_album]);
 	}
 }
 

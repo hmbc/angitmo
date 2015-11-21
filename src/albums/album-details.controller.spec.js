@@ -15,7 +15,8 @@ describe('albums/album-details', () => {
 
 	it(controllerName + ' has immutable album property', inject(($controller) => {
 		const album = {};
-		let controller = $controller(controllerName, { album });
+		const scope = {};
+		let controller = $controller(controllerName, { album, $scope: scope });
 
 		expect(controller.album).toBe(album);
 

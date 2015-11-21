@@ -4,6 +4,7 @@ import { controllerName as homeControllerName, albumsResolver as homeControllerA
 import { controllerName as genresListConrollerName, genresResolver as genresListControllerResolver } from './genres/genres-list.controller'
 import { controllerName as albumsListControllerName, albumsResolver as albumsListControllerResolver } from './albums/albums-list.controller';
 import { controllerName as albumDetailsControllerName, albumsResolver as albumDetailsResolver } from './albums/album-details.controller';
+import { controllerName as shoppingCartControllerName } from './shopping-cart/shopping-cart.controller';
 
 /*@ngInject*/
 function config($routeProvider, $locationProvider, $resourceProvider) {
@@ -38,8 +39,13 @@ function config($routeProvider, $locationProvider, $resourceProvider) {
 			controller: genresListConrollerName,
 			controllerAs: 'ctrl',
 			resolve: {
-				genres: genresListControllerResolver 
+				genres: genresListControllerResolver
 			}
+		})
+		.when('/shopping-cart', {
+			templateUrl: '/shopping-cart/shopping-cart.html',
+			controller: shoppingCartControllerName,
+			controllerAs: 'ctrl'
 		})
 		.otherwise({ redirectTo: '/' });
 

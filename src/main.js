@@ -1,6 +1,7 @@
 /* global angular */
 import {} from './genres/main';
 import {} from './albums/main';
+import {} from './shopping-cart/main';
 import {} from './home/main';
 import {} from './config';
 
